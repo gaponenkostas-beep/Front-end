@@ -1,0 +1,125 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 30px 20px;
+}
+
+.task-title {
+    text-align: center;
+    margin: 25px 0 15px;
+    color: #222222;
+    font-size: 22px;
+}
+
+.task-title:first-of-type {
+    margin-top: 0;
+}
+
+/* Общий контейнер для обоих макетов */
+.container {
+    width: 85%;
+    max-width: 1000px;
+    margin: 0 auto 50px auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+    font-size: 28px;
+    font-weight: bold;
+    color: #333333;
+    text-align: center;
+}
+
+/* =========================================
+   ЗАВДАННЯ 1: FLOAT
+   ========================================= */
+
+.float-layout .top-text {
+    width: 100%;
+    height: 150px;
+    line-height: 150px;
+    background-color: #6ea2d8;
+}
+
+/* Очистка потока (clearfix) для родителя плавающих элементов */
+.float-layout .middle-wrapper::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.float-layout .middle-left {
+    float: left;
+    width: 75%;
+    height: 500px;
+    line-height: 500px;
+    background-color: #bae084;
+}
+
+.float-layout .middle-right {
+    float: left;
+    width: 25%;
+    height: 500px;
+    line-height: 500px;
+    background-color: #829e5a;
+}
+
+.float-layout .bottom-img {
+    clear: both;
+    width: 100%;
+    height: 150px;
+    line-height: 150px;
+    background-color: #3ef2b6;
+}
+
+/* =========================================
+   ЗАВДАННЯ 2: FLEXBOX
+   ========================================= */
+
+.flex-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-layout header,
+.flex-layout main,
+.flex-layout aside,
+.flex-layout footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-layout .top-text {
+    width: 100%;
+    min-height: 150px;
+    background-color: #6ea2d8;
+}
+
+.flex-layout .middle-row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.flex-layout .middle-left {
+    width: 75%;
+    min-height: 500px;
+    background-color: #bae084;
+}
+
+.flex-layout .middle-right {
+    width: 25%;
+    min-height: 500px;
+    background-color: #829e5a;
+}
+
+.flex-layout .bottom-img {
+    width: 100%;
+    min-height: 150px;
+    background-color: #3ef2b6;
+}
