@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+}
+
+/* ================= ЗАВДАННЯ 1: ТАБЛИЦЯ ================= */
+.variant-table {
+    width: 750px;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border: 2px solid #555;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.variant-table td {
+    border: 1px solid #555;
+    padding: 8px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.col-left { width: 25%; }
+.col-center { width: 25%; }
+.col-right { width: 50%; }
+.sub-col { width: 12.5%; height: 22px; }
+
+.row-1 td {
+    height: 45px;
+    background-color: #858f8f;
+    color: #ffffff;
+}
+
+.row-2 td {
+    background-color: #f5f585;
+    color: #000000;
+}
+
+.row-4 td {
+    height: 15px;
+    background-color: #ffffff;
+}
+
+.row-1:hover td {
+    background-color: #f5f585;
+    color: #000000;
+}
+
+.row-2:hover td {
+    background-color: #858f8f;
+    color: #ffffff;
+}
+
+
+/* ================= ЗАВДАННЯ 2: КОЛА В РЯД ================= */
+.task2-row {
+    display: flex;
+    gap: 60px; /* Відстань між двома блоками */
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.task2-item h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.container {
+    position: relative;
+    width: 200px;  /* Зменшена ширина */
+    height: 180px; /* Зменшена висота */
+}
+
+.circle {
+    position: absolute;
+    width: 100px;  /* Було 140px, стало 100px */
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    mix-blend-mode: multiply;
+}
+
+/* --- Спосіб 1: через position --- */
+.pos-red {
+    background-color: #ff6e6e;
+    top: 0;
+    left: 48px;
+}
+
+.pos-blue {
+    background-color: #7bb4e3;
+    top: 62px;
+    left: 8px;
+}
+
+.pos-green {
+    background-color: #82d9a8;
+    top: 62px;
+    left: 88px;
+}
+
+/* --- Спосіб 2: через transform: translate() --- */
+.trans-red {
+    background-color: #ff6e6e;
+    transform: translate(48px, 0px);
+}
+
+.trans-blue {
+    background-color: #7bb4e3;
+    transform: translate(8px, 62px);
+}
+
+.trans-green {
+    background-color: #82d9a8;
+    transform: translate(88px, 62px);
+}
