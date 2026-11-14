@@ -1,1 +1,61 @@
 
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h2>Завдання 1. Таблиця за варіантом</h2>
+    <table class="variant-table">
+        <tr class="row-1">
+            <td class="col-left">Гапоненко</td>
+            <td colspan="2" class="col-center">Станіслав</td>
+            <td class="col-right">Максимович</td>
+        </tr>
+
+        <tr class="row-2">
+            <td rowspan="2">Група ІО-43</td>
+            <td rowspan="2" class="sub-col">Лаб. №2</td>
+            <td class="sub-col">Варіант №5</td>
+            <td rowspan="2"></td>
+        </tr>
+        <tr class="row-2">
+            <td class="sub-col"></td>
+        </tr>
+
+        <tr class="row-4">
+            <td></td>
+            <td colspan="2"></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <!-- Обгортка для розташування блоків у ряд -->
+    <div class="task2-row">
+        <div class="task2-item">
+            <h3>Завдання 2.1 (position)</h3>
+            <div class="container">
+                <div class="circle pos-red"></div>
+                <div class="circle pos-blue"></div>
+                <div class="circle pos-green"></div>
+            </div>
+        </div>
+
+        <div class="task2-item">
+            <h3>Завдання 2.2 (transform)</h3>
+            <div class="container">
+                <div class="circle trans-red"></div>
+                <div class="circle trans-blue"></div>
+                <div class="circle trans-green"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
