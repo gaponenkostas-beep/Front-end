@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №5 | Варіант 5</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .task-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .container {
+            background: #fff;
+            padding: 25px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        h2, h3 {
+            margin-top: 0;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        /* Стилі для Завдання 1 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        input[type="text"]::placeholder {
+            color: #95a5a6;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        /* Клас помилки */
+        input.error {
+            border-color: #e74c3c;
+            background-color: #fdecea;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        /* Блок результату справа від форми */
+        #resultBox {
+            display: none;
+            border-left: 5px solid #2ecc71;
+        }
+
+        #resultBox h3 {
+            text-align: left;
+            color: #27ae60;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        #resultContent p {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+
+        /* Стилі для Завдання 2 */
+        .palette-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            user-select: none;
+        }
+
+        td {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #34495e;
+            text-align: center;
+            vertical-align: middle;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ЗАВДАННЯ 1 -->
+    <div class="task-wrapper">
+        <div class="container">
+            <h2>Завдання 1</h2>
+            <form id="userForm" novalidate>
+                <div class="form-group">
+                    <input type="text" id="pib" placeholder="ПІБ">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="faculty" placeholder="Факультет">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="dob" placeholder="Дата народження">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="address" placeholder="Адреса">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" id="email" placeholder="E-mail">
+                </div>
+
+                <button type="submit">Перевірити</button>
+            </form>
+        </div>
+
+        <!-- Виведення введеної інформації справа -->
+        <div class="container" id="resultBox">
+            <h3>Введені дані:</h3>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <!-- ЗАВДАННЯ 2 -->
+    <div class="container">
+        <h2>Завдання 2</h2>
+        <div class="palette-wrapper">
+            <label for="colorPicker">Оберіть колір з палітри:</label>
+            <input type="color" id="colorPicker" value="#ff5733">
+        </div>
+        <table id="gridTable"></table>
+    </div>
+
+    <script>
+        // ================= ЗАВДАННЯ 1 =================
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const resultBox = document.getElementById('resultBox');
+            const resultContent = document.getElementById('resultContent');
+
+            const fields = [
+                {
+                    id: 'pib',
+                    label: 'ПІБ',
+                    regex: /^[А-ЯІЇЄҐA-Z][а-яіїєґa-z']+\s[А-ЯІЇЄҐA-Z]\.[А-ЯІЇЄҐA-Z]\.$/
+                },
+                {
+                    id: 'faculty',
+                    label: 'Факультет',
+                    regex: /^[А-ЯІЇЄҐA-Zа-яіїєґa-z]{4}$/
+                },
+                {
+                    id: 'dob',
+                    label: 'Дата народження',
+                    regex: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$/
+                },
+                {
+                    id: 'address',
+                    label: 'Адреса',
+                    regex: /^м\.\s\d{5,6}$/
+                },
+                {
+                    id: 'email',
+                    label: 'E-mail',
+                    regex: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.com$/
+                }
+            ];
+
+            let isFormValid = true;
+            let outputData = [];
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                const value = input.value.trim();
+
+                if (field.regex.test(value)) {
+                    input.classList.remove('error');
+                    outputData.push(`<p><strong>${field.label}:</strong> ${value}</p>`);
+                } else {
+                    input.classList.add('error');
+                    isFormValid = false;
+                }
+            });
+
+            if (isFormValid) {
+                resultContent.innerHTML = outputData.join('');
+                resultBox.style.display = 'block';
+            } else {
+                resultBox.style.display = 'none';
+            }
+        });
+
+        // ================= ЗАВДАННЯ 2 =================
+        const table = document.getElementById('gridTable');
+        const colorPicker = document.getElementById('colorPicker');
+        const variantNumber = 5;
+        let counter = 1;
+        let clickTimer = null;
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        for (let row = 0; row < 6; row++) {
+            const tr = document.createElement('tr');
+            for (let col = 0; col < 6; col++) {
+                const td = document.createElement('td');
+                td.textContent = counter;
+                td.dataset.num = counter;
+
+                if (counter === variantNumber) {
+                    // 1. Наведение -> случайный цвет
+                    td.addEventListener('mouseover', function() {
+                        this.style.backgroundColor = getRandomColor();
+                    });
+
+                    // 2. Одиночный Click -> цвет из палитры
+                    td.addEventListener('click', function() {
+                        clearTimeout(clickTimer);
+                        clickTimer = setTimeout(() => {
+                            this.style.backgroundColor = colorPicker.value;
+                        }, 250);
+                    });
+
+                    // 3. Двойной клик -> красим все клетки, КРОМЕ 5-й
+                    td.addEventListener('dblclick', function() {
+                        clearTimeout(clickTimer);
+                        const allCells = table.querySelectorAll('td');
+                        const selectedColor = colorPicker.value;
+
+                        allCells.forEach(cell => {
+                            if (Number(cell.dataset.num) !== variantNumber) {
+                                cell.style.backgroundColor = selectedColor;
+                            }
+                        });
+                    });
+                }
+
+                tr.appendChild(td);
+                counter++;
+            }
+            table.appendChild(tr);
+        }
+    </script>
+</body>
+</html>
