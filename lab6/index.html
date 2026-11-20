@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота — Варіант 5 (Fetch & Promise)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .controls {
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #a0c4ff;
+            cursor: not-allowed;
+        }
+
+        #status {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+            min-height: 20px;
+        }
+
+        .user-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            width: 100%;
+            max-width: 400px;
+            display: none; /* Приховано до першого завантаження */
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .user-card img {
+            width: 128px;
+            height: 128px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #007bff;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            width: 100%;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .user-info li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .user-info li:last-child {
+            border-bottom: none;
+        }
+
+        .user-info strong {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <button id="loadBtn">Отримати дані користувача</button>
+        <div id="status"></div>
+    </div>
+
+    <div class="user-card" id="userCard">
+        <!-- 1. picture -->
+        <img id="userPicture" src="" alt="Фото користувача">
+        
+        <ul class="user-info">
+            <!-- 3. cell -->
+            <li><strong>Мобільний (cell):</strong> <span id="userCell"></span></li>
+            <!-- 5. country -->
+            <li><strong>Країна (country):</strong> <span id="userCountry"></span></li>
+            <!-- 7. email -->
+            <li><strong>Email:</strong> <span id="userEmail"></span></li>
+            <!-- 9. coordinates -->
+            <li><strong>Координати:</strong> <span id="userCoordinates"></span></li>
+        </ul>
+    </div>
+
+    <script>
+        const loadBtn = document.getElementById('loadBtn');
+        const statusDiv = document.getElementById('status');
+        const userCard = document.getElementById('userCard');
+
+        // Елементи виводу згідно з варіантом 5 (1, 3, 5, 7, 9)
+        const userPicture = document.getElementById('userPicture');
+        const userCell = document.getElementById('userCell');
+        const userCountry = document.getElementById('userCountry');
+        const userEmail = document.getElementById('userEmail');
+        const userCoordinates = document.getElementById('userCoordinates');
+
+        function fetchRandomUser() {
+            statusDiv.textContent = 'Завантаження даних...';
+            loadBtn.disabled = true;
+
+            // Запит до API за допомогою fetch та обробка через Promise (.then / .catch)
+            fetch('https://randomuser.me/api')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Помилка HTTP: ${response.status}`);
+                    }
+                    return response.json(); // Повертає проміс із розпарсеним JSON
+                })
+                .then(data => {
+                    const user = data.results[0];
+
+                    // 1. picture
+                    userPicture.src = user.picture.large;
+
+                    // 3. cell
+                    userCell.textContent = user.cell;
+
+                    // 5. country
+                    userCountry.textContent = user.location.country;
+
+                    // 7. email
+                    userEmail.textContent = user.email;
+
+                    // 9. coordinates
+                    const lat = user.location.coordinates.latitude;
+                    const lon = user.location.coordinates.longitude;
+                    userCoordinates.textContent = `${lat}, ${lon}`;
+
+                    // Відображаємо картку та оновлюємо статус
+                    userCard.style.display = 'flex';
+                    statusDiv.textContent = 'Дані успішно оновлено!';
+                })
+                .catch(error => {
+                    console.error('Помилка отримання даних:', error);
+                    statusDiv.textContent = `Не вдалося завантажити дані: ${error.message}`;
+                })
+                .finally(() => {
+                    loadBtn.disabled = false;
+                });
+        }
+
+        // Прив'язка функції до кліку на кнопку
+        loadBtn.addEventListener('click', fetchRandomUser);
+    </script>
+
+</body>
+</html>
